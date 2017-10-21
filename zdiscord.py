@@ -76,11 +76,12 @@ class Bot(commands.Bot):
 
 
 def main(botcls, config):
-    stream_handler = StreamHandler(sys.stdout)
-    file_handler = RotatingFileHandler(os.path.expanduser(config.logfile))
+    if 'logfile' in config.data:
+        handler = RotatingFileHandler(os.path.expanduser(config.logfile))
+    else:
+        handler = StreamHandler(sys.stdout)
 
-    stream_handler.push_application()
-    file_handler.push_application()
+    handler.push_application()
 
     bot = botcls(config)
     bot.run()
