@@ -5,7 +5,7 @@
 from logbook import RotatingFileHandler, StreamHandler, Logger
 from discord.ext import commands
 
-import functools, os, sys, traceback, yaml
+import functools, inspect, os, sys, traceback, yaml
 from pathlib import Path
 
 
@@ -56,7 +56,8 @@ Function where the error occurred: `{func.__name__}`
 Sorry! :(
 '''.strip())
 
-    return commands.command(name=func.__name__)(wrapper)
+    pass_context = 'ctx' in inspect.getfullargspec(func).args
+    return commands.command(name=func.__name__, pass_context=pass_context)(wrapper)
 
 
 class Bot(commands.Bot):
