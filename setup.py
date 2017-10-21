@@ -7,5 +7,5 @@ setup(
     author_email='rymg19@gmail.com',
     py_modules=['zdiscord'],
     description='Some simple Discord bot helpers',
-    install_requires=['logbook', 'pyyaml'],
+    install_requires=['discord.py', 'logbook', 'pyyaml'],
 )
