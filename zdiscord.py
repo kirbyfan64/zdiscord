@@ -18,6 +18,8 @@ def loadfile(path):
 
 
 class Config:
+    EXPANDS = []
+
     def __init__(self, path=None):
         if path is None:
             path = self.DEFAULT_PATH
@@ -28,7 +30,11 @@ class Config:
     def __getattr__(self, name):
         if name not in self.data:
             raise AttributeError(name)
-        return self.data[name]
+        value = self.data[name]
+        if name in self.EXPANDS:
+            return os.path.expandvars(value)
+        else:
+            return value
 
 
 def safe_command(func):
